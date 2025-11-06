@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bourse Des Livres - Échangez vos livres</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2BA9A1;
+            --primary-dark: #23938C;
+            --secondary: #FF7F50;
+            --light: #F8F9FA;
+            --dark: #1A1A1A;
+            --gray: #6C757D;
+            --light-gray: #E9ECEF;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .search-bar button {
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 0 30px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            padding: 60px 0;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            color: var(--dark);
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .action-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .action-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .action-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .action-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .action-card p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Categories */
+        .categories {
+            padding: 60px 0;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .category-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        /* Featured Books */
+        .featured-books {
+            padding: 60px 0;
+            background: var(--white);
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .book-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-image {
+            width: 100%;
+            height: 200px;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .book-info {
+            padding: 20px;
+        }
+
+        .book-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .book-author {
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .book-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 60px 0;
+            background: var(--light);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-column a {
+            color: var(--light-gray);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--light-gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .search-bar input, .search-bar button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span>📚</span>
+                    Bourse Des Livres
+                </a>
+                <div class="nav-links">
+                    <a href="livres.html">Livres</a>
+                    <a href="manuels.html">Manuels</a>
+                    <a href="vendre.html">Vendre</a>
+                    <a href="messagerie.html">Messagerie</a>
+                </div>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="location.href='connexion.html'">Connexion</button>
+                    <button class="btn btn-primary" onclick="location.href='inscription.html'">Inscription</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Échangez vos livres facilement</h1>
+            <p>La plateforme communautaire pour acheter, vendre et échanger vos livres d'occasion</p>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Rechercher un livre, un auteur, un genre...">
+                <button type="button" onclick="performSearch()">🔍 Rechercher</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+        <div class="container">
+            <h2 class="section-title">Accès rapide</h2>
+            <div class="actions-grid">
+                <a href="livres.html" class="action-card">
+                    <div class="action-icon">📖</div>
+                    <h3>Parcourir les livres</h3>
+                    <p>Découvrez tous les livres disponibles</p>
+                </a>
+                <a href="manuels.html" class="action-card">
+                    <div class="action-icon">🎓</div>
+                    <h3>Manuels scolaires</h3>
+                    <p>Livres pour étudiants et élèves</p>
+                </a>
+                <a href="vendre.html" class="action-card">
+                    <div class="action-icon">💰</div>
+                    <h3>Vendre un livre</h3>
+                    <p>Mettez vos livres en vente</p>
+                </a>
+                <a href="messagerie.html" class="action-card">
+                    <div class="action-icon">💬</div>
+                    <h3>Messagerie</h3>
+                    <p>Communiquez avec les vendeurs</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Catégories populaires</h2>
+            <div class="categories-grid">
+                <a href="livres.html?category=roman" class="category-card">
+                    <div class="category-icon">📖</div>
+                    <h3>Romans</h3>
+                    <p>Découvrez des romans de tous genres</p>
+                </a>
+                <a href="manuels.html" class="category-card">
+                    <div class="category-icon">📚</div>
+                    <h3>Manuels Scolaires</h3>
+                    <p>Livres pour étudiants et élèves</p>
+                </a>
+                <a href="livres.html?category=science-fiction" class="category-card">
+                    <div class="category-icon">🚀</div>
+                    <h3>Science-Fiction</h3>
+                    <p>Voyagez dans le futur</p>
+                </a>
+                <a href="livres.html?category=policier" class="category-card">
+                    <div class="category-icon">🕵️</div>
+                    <h3>Policiers</h3>
+                    <p>Enquêtes et mystères</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Books -->
+    <section class="featured-books">
+        <div class="container">
+            <h2 class="section-title">Livres récemment ajoutés</h2>
+            <div class="books-grid">
+                <a href="#" class="book-card">
+                    <div class="book-image">📘</div>
+                    <div class="book-info">
+                        <h3 class="book-title">L'Étranger</h3>
+                        <p class="book-author">Albert Camus</p>
+                        <p class="book-price">8€</p>
+                    </div>
+                </a>
+                <a href="#" class="book-card">
+                    <div class="book-image">📗</div>
+                    <div class="book-info">
+                        <h3 class="book-title">Mathématiques Terminale</h3>
+                        <p class="book-author">Manuel Scolaire</p>
+                        <p class="book-price">15€</p>
+                    </div>
+                </a>
+                <a href="#" class="book-card">
+                    <div class="book-image">📕</div>
+                    <div class="book-info">
+                        <h3 class="book-title">1984</h3>
+                        <p class="book-author">George Orwell</p>
+                        <p class="book-price">10€</p>
+                    </div>
+                </a>
+                <a href="#" class="book-card">
+                    <div class="book-image">📙</div>
+                    <div class="book-info">
+                        <h3 class="book-title">Physique-Chimie 1ère</h3>
+                        <p class="book-author">Manuel Scolaire</p>
+                        <p class="book-price">12€</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Livres disponibles</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">5K+</div>
+                    <div class="stat-label">Membres actifs</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Transactions réussies</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24h</div>
+                    <div class="stat-label">Support réactif</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Comment ça marche ?</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Inscrivez-vous</h3>
+                    <p>Créez votre compte gratuitement en 2 minutes</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Parcourez ou vendez</h3>
+                    <p>Découvrez des livres ou mettez les vôtres en vente</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Communiquez</h3>
+                    <p>Utilisez la messagerie pour échanger avec les membres</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Échangez</h3>
+                    <p>Finalisez votre transaction en toute sécurité</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Bourse Des Livres</h3>
+                    <a href="apropos.html">À propos</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="#">Carrière</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Aide</h3>
+                    <a href="#">Centre d'aide</a>
+                    <a href="#">Conditions d'utilisation</a>
+                    <a href="#">Politique de confidentialité</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Communauté</h3>
+                    <a href="#">Forum</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Événements</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Navigation</h3>
+                    <a href="livres.html">Livres</a>
+                    <a href="manuels.html">Manuels</a>
+                    <a href="vendre.html">Vendre</a>
+                    <a href="messagerie.html">Messagerie</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Bourse Des Livres. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Gestion de la connexion
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const currentUser = localStorage.getItem('currentUser');
+            
+            const authButtons = document.querySelector('.auth-buttons');
+            
+            if (isLoggedIn === 'true' && currentUser) {
+                const userData = JSON.parse(currentUser);
+                authButtons.innerHTML = `
+                    <span style="margin-right: 15px; color: var(--dark);">Bonjour, ${userData.firstName}</span>
+                    <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+                `;
+            }
+
+            // Configuration de la recherche
+            setupSearch();
+        });
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.querySelector('.search-bar button');
+            
+            // Recherche par bouton
+            searchButton.addEventListener('click', performSearch);
+            
+            // Recherche par Entrée
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        }
+
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput.value.trim();
+            
+            if (searchTerm) {
+                // Rediriger vers la page livres avec le terme de recherche
+                window.location.href = `livres.html?search=${encodeURIComponent(searchTerm)}`;
+            } else {
+                // Si pas de terme, aller simplement à la page livres
+                window.location.href = 'livres.html';
+            }
+        }
+    </script>
+</body>
+</html>

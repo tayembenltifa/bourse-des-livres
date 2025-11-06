@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuels - Bourse Des Livres</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+            :root {
+            --primary: #2BA9A1;
+            --primary-dark: #23938C;
+            --secondary: #FF7F50;
+            --light: #F8F9FA;
+            --dark: #1A1A1A;
+            --gray: #6C757D;
+            --light-gray: #E9ECEF;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* Filters */
+        .filters {
+            background: var(--white);
+            padding: 30px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .filter-group select, .filter-group input {
+            padding: 10px 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 14px;
+            min-width: 150px;
+        }
+
+        .filter-btn {
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* Books Grid */
+        .books-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: var(--dark);
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .book-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-image {
+            width: 100%;
+            height: 200px;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            position: relative;
+        }
+
+        .book-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .book-info {
+            padding: 20px;
+        }
+
+        .book-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .book-author {
+            color: var(--gray);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .book-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .book-level {
+            background: var(--primary);
+            color: var(--white);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .book-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .book-seller {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .seller-avatar {
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        .seller-name {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .contact-btn {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .contact-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-column a {
+            color: var(--light-gray);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--light-gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .filter-group select, .filter-group input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <<!-- Header -->
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <span>📚</span>
+                Bourse Des Livres
+            </a>
+            <div class="nav-links">
+                <a href="livres.html">Livres</a>
+                <a href="manuels.html">Manuels</a>
+                <a href="vendre.html">Vendre</a>
+                <a href="messagerie.html">Messagerie</a>
+            </div>
+            <div class="auth-buttons">
+                <button class="btn btn-outline" onclick="location.href='connexion.html'">Connexion</button>
+                <button class="btn btn-primary" onclick="location.href='inscription.html'">Inscription</button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Manuels Scolaires & Universitaires</h1>
+            <p>Trouvez les manuels dont vous avez besoin à petits prix</p>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+        <div class="container">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Niveau scolaire</label>
+                    <select id="levelFilter">
+                        <option value="">Tous les niveaux</option>
+                        <option value="college">Collège</option>
+                        <option value="lycee">Lycée</option>
+                        <option value="universite">Université</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Matière</label>
+                    <select id="subjectFilter">
+                        <option value="">Toutes les matières</option>
+                        <option value="mathematiques">Mathématiques</option>
+                        <option value="francais">Français</option>
+                        <option value="histoire">Histoire-Géographie</option>
+                        <option value="sciences">Sciences</option>
+                        <option value="anglais">Anglais</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Prix max</label>
+                    <input type="number" id="priceFilter" placeholder="50€ max">
+                </div>
+                <div class="filter-group">
+                    <label>État</label>
+                    <select id="conditionFilter">
+                        <option value="">Tous les états</option>
+                        <option value="neuf">Neuf</option>
+                        <option value="tres-bon">Très bon</option>
+                        <option value="bon">Bon</option>
+                        <option value="acceptable">Acceptable</option>
+                    </select>
+                </div>
+                <button class="filter-btn" type="button" onclick="applyFilters()">🔍 Appliquer les filtres</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Grid -->
+    <section class="books-section">
+        <div class="container">
+            <h2 class="section-title">Manuels disponibles</h2>
+            <div class="books-grid" id="booksGrid">
+                <!-- Les manuels seront chargés ici par JavaScript -->
+            </div>
+
+            <!-- No Results Message -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <div class="no-results-icon">🔍</div>
+                <h3>Aucun manuel trouvé</h3>
+                <p>Essayez de modifier vos critères de recherche</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Bourse Des Livres</h3>
+                    <a href="apropos.html">À propos</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="#">Carrière</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Aide</h3>
+                    <a href="#">Centre d'aide</a>
+                    <a href="#">Conditions d'utilisation</a>
+                    <a href="#">Politique de confidentialité</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Communauté</h3>
+                    <a href="#">Forum</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Événements</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Bourse Des Livres. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Données des manuels
+        const manualsData = [
+            {
+                id: 1, title: "Mathématiques Terminale S", author: "Éditions Hachette Éducation", 
+                level: "lycee", subject: "mathematiques", price: 18, condition: "Neuf",
+                seller: { firstName: "Marie", lastName: "L." }, image: "📘"
+            },
+            {
+                id: 2, title: "Physique-Chimie 1ère", author: "Éditions Bordas", 
+                level: "lycee", subject: "sciences", price: 12, condition: "Très bon",
+                seller: { firstName: "Pierre", lastName: "D." }, image: "📗"
+            },
+            {
+                id: 3, title: "Histoire-Géographie 3ème", author: "Éditions Belin", 
+                level: "college", subject: "histoire", price: 8, condition: "Bon",
+                seller: { firstName: "Sophie", lastName: "M." }, image: "📕"
+            },
+            {
+                id: 4, title: "Droit Civil L1", author: "Éditions Dalloz", 
+                level: "universite", subject: "droit", price: 25, condition: "Neuf",
+                seller: { firstName: "Thomas", lastName: "R." }, image: "📙"
+            },
+            {
+                id: 5, title: "SVT 2nde", author: "Éditions Nathan", 
+                level: "lycee", subject: "sciences", price: 10, condition: "Très bon",
+                seller: { firstName: "Alice", lastName: "B." }, image: "📓"
+            },
+            {
+                id: 6, title: "Économie BTS", author: "Éditions Foucher", 
+                level: "universite", subject: "economie", price: 15, condition: "Acceptable",
+                seller: { firstName: "Jean", lastName: "K." }, image: "📔"
+            }
+        ];
+
+        // État des filtres
+        let currentFilters = {
+            level: '',
+            subject: '',
+            price: '',
+            condition: ''
+        };
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const currentUser = localStorage.getItem('currentUser');
+            
+            const authButtons = document.querySelector('.auth-buttons');
+            
+            if (isLoggedIn === 'true' && currentUser) {
+                const userData = JSON.parse(currentUser);
+                authButtons.innerHTML = `
+                    <span style="margin-right: 15px; color: var(--dark);">Bonjour, ${userData.firstName}</span>
+                    <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+                `;
+            }
+
+            // Charger les manuels
+            renderManuals();
+            
+            // Gestion du contact vendeur
+            setupContactButtons();
+        });
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+
+        function renderManuals() {
+            const booksGrid = document.getElementById('booksGrid');
+            const noResults = document.getElementById('noResults');
+
+            // Filtrer les manuels
+            const filteredManuals = filterManuals();
+
+            if (filteredManuals.length === 0) {
+                booksGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            booksGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+
+            // Générer le HTML des manuels
+            booksGrid.innerHTML = filteredManuals.map(manual => `
+                <div class="book-card">
+                    <div class="book-image">
+                        <span>${manual.image}</span>
+                        <div class="book-badge">${manual.condition}</div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">${manual.title}</h3>
+                        <p class="book-author">${manual.author}</p>
+                        <div class="book-details">
+                            <span class="book-level">${getLevelName(manual.level)}</span>
+                            <span class="book-price">${manual.price}€</span>
+                        </div>
+                        <div class="book-seller">
+                            <div class="seller-avatar">${manual.seller.firstName[0]}</div>
+                            <span class="seller-name">${manual.seller.firstName} ${manual.seller.lastName}</span>
+                        </div>
+                        <button class="contact-btn" onclick="contactSeller(${manual.id})">Contacter le vendeur</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterManuals() {
+            let filtered = [...manualsData];
+
+            // Filtre par niveau
+            if (currentFilters.level) {
+                filtered = filtered.filter(manual => manual.level === currentFilters.level);
+            }
+
+            // Filtre par matière
+            if (currentFilters.subject) {
+                filtered = filtered.filter(manual => manual.subject === currentFilters.subject);
+            }
+
+            // Filtre par prix
+            if (currentFilters.price) {
+                filtered = filtered.filter(manual => manual.price <= parseInt(currentFilters.price));
+            }
+
+            // Filtre par état
+            if (currentFilters.condition) {
+                filtered = filtered.filter(manual => manual.condition === currentFilters.condition);
+            }
+
+            return filtered;
+        }
+
+        function getLevelName(level) {
+            const levelNames = {
+                'college': 'Collège',
+                'lycee': 'Lycée',
+                'universite': 'Université'
+            };
+            return levelNames[level] || level;
+        }
+
+        function applyFilters() {
+            currentFilters = {
+                level: document.getElementById('levelFilter').value,
+                subject: document.getElementById('subjectFilter').value,
+                price: document.getElementById('priceFilter').value,
+                condition: document.getElementById('conditionFilter').value
+            };
+            renderManuals();
+        }
+
+        function contactSeller(manualId) {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            
+            if (isLoggedIn !== 'true') {
+                alert('Veuillez vous connecter pour contacter un vendeur');
+                window.location.href = 'connexion.html';
+                return;
+            }
+
+            const manual = manualsData.find(m => m.id === manualId);
+            if (manual) {
+                // Créer une conversation
+                createConversation(manual);
+                alert(`Redirection vers la messagerie pour "${manual.title}"`);
+                window.location.href = 'messagerie.html';
+            }
+        }
+
+        function createConversation(manual) {
+            const conversations = JSON.parse(localStorage.getItem('conversations') || '[]');
+            
+            const newConversation = {
+                id: Date.now(),
+                userId: manual.seller.firstName.toLowerCase(),
+                userName: `${manual.seller.firstName} ${manual.seller.lastName}`,
+                lastMessage: `Intéressé(e) par "${manual.title}"`,
+                timestamp: new Date().toISOString(),
+                unread: 0,
+                book: {
+                    title: manual.title,
+                    price: `${manual.price}€`
+                },
+                messages: [
+                    {
+                        id: 1,
+                        content: `Bonjour ! Je suis intéressé(e) par votre manuel "${manual.title}". Est-il toujours disponible ?`,
+                        sender: 'me',
+                        timestamp: new Date().toISOString()
+                    }
+                ]
+            };
+            
+            conversations.push(newConversation);
+            localStorage.setItem('conversations', JSON.stringify(conversations));
+        }
+
+        function setupContactButtons() {
+            // Cette fonction est maintenant intégrée dans contactSeller()
+        }
+    </script>
+</body>
+</html>
